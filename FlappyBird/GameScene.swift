@@ -13,17 +13,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scrollNode:SKNode!
     var wallNode:SKNode!
     var bird:SKSpriteNode!
+    var item:SKNode!
 
     // 衝突判定カテゴリー
     let birdCategory: UInt32 = 1 << 0   // 0...00001
     let groundCategory: UInt32 = 1 << 1 // 0...00010
     let wallCategory: UInt32 = 1 << 2   // 0...00100
     let scoreCategory: UInt32 = 1 << 3  // 0...01000
+    let itemCategory: UInt32 = 1 << 4   // 0...10000
     
     // スコア用
     var score = 0
+    var itemscore = 0
     var scoreLabelNode:SKLabelNode!
     var bestScoreLabelNode:SKLabelNode!
+    var itemscoreLabelNode:SKLabelNode!
     let userDefaults:UserDefaults = UserDefaults.standard
     
     // SKView上にシーンが表示されたときに呼ばれるメソッド
@@ -48,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupGround()
         setupCloud()
         setupWall()
+        setupItem()
         setupBird()
         
         setupScoreLabel()
@@ -227,7 +232,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         wallNode.run(repeatForenerAnimation)
     }
+    
+    func setupItem(){
+        // アイテムの画像を読み込む
+        let itemTexture = SKTexture(imageNamed: "bird_a")   // 仮
+        itemTexture.filteringMode = .linear
         
+        // テクスチャを指定してスプライトを作成
+        let itemSprite = SKSpriteNode(texture: itemTexture)
+        
+        // スプライトを表示する位置を指定
+        itemSprite.position = CGPoint(x: 100, y: 200)   // 画像の中心位置の決定
+//        itemSprite.xScale = -1.0    // x軸で反転
+        itemSprite.xScale = 0.7
+        itemSprite.yScale = 0.7
+        itemSprite.zPosition = -75
+        
+        
+            let moveItem = SKAction.moveBy(x: -frame.size.width, y: 0, duration: 2)
+        
+            let resetItem = SKAction.moveBy(x: frame.size.width, y: 0, duration: 0)
+        
+            let repeatItem = SKAction.repeatForever(SKAction.sequence([moveItem, resetItem]))
+        
+        
+        itemSprite.run(repeatItem)
+        
+        // シーンにスプライトを追加する
+        addChild(itemSprite)
+
+    }
+    
     func setupBird() {
         // 鳥の画像を2種類読み込む
         let birdTextureA = SKTexture(imageNamed: "bird_a")

@@ -248,13 +248,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         itemSprite.yScale = 0.7
         itemSprite.zPosition = -75
         
+        let moveItem = SKAction.moveBy(x: -frame.size.width, y: 0, duration: 2)
+
+        let resetItem = SKAction.moveBy(x: frame.size.width, y: 0, duration: 0)
+
+        let repeatItem = SKAction.repeatForever(SKAction.sequence([moveItem, resetItem]))
         
-            let moveItem = SKAction.moveBy(x: -frame.size.width, y: 0, duration: 2)
-        
-            let resetItem = SKAction.moveBy(x: frame.size.width, y: 0, duration: 0)
-        
-            let repeatItem = SKAction.repeatForever(SKAction.sequence([moveItem, resetItem]))
-        
+        itemSprite.physicsBody = SKPhysicsBody(rectangleOf: itemTexture.size())
+        itemSprite.physicsBody?.affectedByGravity = false
+        itemSprite.physicsBody?.isDynamic = false
+        itemSprite.physicsBody?.categoryBitMask = self.itemCategory // itemのカテゴリ番号
         
         itemSprite.run(repeatItem)
         
@@ -287,7 +290,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // 衝突のカテゴリー設定
         bird.physicsBody?.categoryBitMask = birdCategory
         bird.physicsBody?.collisionBitMask = groundCategory | wallCategory
-        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory
+        bird.physicsBody?.contactTestBitMask = groundCategory | wallCategory | itemCategory
         
         // アニメーションを設定
         bird.run(flap)
@@ -330,6 +333,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 userDefaults.set(bestScore, forKey: "BEST")
                 userDefaults.synchronize()
             }
+        }else if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory || (contact.bodyB.categoryBitMask & itemCategory) == itemCategory {
+                // アイテムと衝突した
+                print("GetItem")
+                itemscore += 1
+                itemscoreLabelNode.text = "Item:\(itemscore)"
         } else {
             // 壁か地面と衝突した
             print("GameOver")
@@ -344,6 +352,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.bird.speed = 0
             })
         }
+        
+       
     }
     
     func restart() {
@@ -363,6 +373,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupScoreLabel() {
         score = 0
+        itemscore = 0
         scoreLabelNode = SKLabelNode()
         scoreLabelNode.fontColor = UIColor.black
         scoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 60)
@@ -380,6 +391,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bestScore = userDefaults.integer(forKey: "BEST")
         bestScoreLabelNode.text = "BEST Score:\(bestScore)"
         self.addChild(bestScoreLabelNode)
+        
+        itemscoreLabelNode = SKLabelNode()
+        itemscoreLabelNode.fontColor = UIColor.black
+        itemscoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 120)
+        itemscoreLabelNode.zPosition = 100
+        itemscoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        itemscoreLabelNode.text = "Item:\(itemscore)"
+        self.addChild(itemscoreLabelNode)
     }
     
 }

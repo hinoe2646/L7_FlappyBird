@@ -242,7 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let itemSprite = SKSpriteNode(texture: itemTexture)
         
         // スプライトを表示する位置を指定
-        itemSprite.position = CGPoint(x: 100, y: 200)   // 画像の中心位置の決定
+        itemSprite.position = CGPoint(x: frame.size.width, y: frame.size.height / 2)   // 画像の中心位置の決定
 //        itemSprite.xScale = -1.0    // x軸で反転
         itemSprite.xScale = 0.7
         itemSprite.yScale = 0.7

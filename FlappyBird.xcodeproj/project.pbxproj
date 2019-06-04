@@ -13,6 +13,10 @@
 		F8641B1422A36C6F004A8F0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8641B1322A36C6F004A8F0C /* Assets.xcassets */; };
 		F8641B1722A36C6F004A8F0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8641B1522A36C6F004A8F0C /* LaunchScreen.storyboard */; };
 		F8641B1F22A39819004A8F0C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8641B1E22A39819004A8F0C /* GameScene.swift */; };
+		F88079D822A6188600126D7B /* decision24.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F88079D722A6188600126D7B /* decision24.mp3 */; };
+		F88079DA22A61FF200126D7B /* damage7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F88079D922A61FF200126D7B /* damage7.mp3 */; };
+		F88079DC22A6228300126D7B /* retrogamecenter2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F88079DB22A6228300126D7B /* retrogamecenter2.mp3 */; };
+		F88079DE22A6292100126D7B /* cursor7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F88079DD22A6292100126D7B /* cursor7.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		F8641B1622A36C6F004A8F0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8641B1822A36C6F004A8F0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8641B1E22A39819004A8F0C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		F88079D722A6188600126D7B /* decision24.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = decision24.mp3; sourceTree = "<group>"; };
+		F88079D922A61FF200126D7B /* damage7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = damage7.mp3; sourceTree = "<group>"; };
+		F88079DB22A6228300126D7B /* retrogamecenter2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = retrogamecenter2.mp3; sourceTree = "<group>"; };
+		F88079DD22A6292100126D7B /* cursor7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cursor7.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,10 @@
 				F8641B1522A36C6F004A8F0C /* LaunchScreen.storyboard */,
 				F8641B1822A36C6F004A8F0C /* Info.plist */,
 				F8641B1E22A39819004A8F0C /* GameScene.swift */,
+				F88079D722A6188600126D7B /* decision24.mp3 */,
+				F88079D922A61FF200126D7B /* damage7.mp3 */,
+				F88079DD22A6292100126D7B /* cursor7.mp3 */,
+				F88079DB22A6228300126D7B /* retrogamecenter2.mp3 */,
 			);
 			path = FlappyBird;
 			sourceTree = "<group>";
@@ -125,9 +137,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88079D822A6188600126D7B /* decision24.mp3 in Resources */,
 				F8641B1722A36C6F004A8F0C /* LaunchScreen.storyboard in Resources */,
+				F88079DA22A61FF200126D7B /* damage7.mp3 in Resources */,
+				F88079DE22A6292100126D7B /* cursor7.mp3 in Resources */,
 				F8641B1422A36C6F004A8F0C /* Assets.xcassets in Resources */,
 				F8641B1222A36C6E004A8F0C /* Main.storyboard in Resources */,
+				F88079DC22A6228300126D7B /* retrogamecenter2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

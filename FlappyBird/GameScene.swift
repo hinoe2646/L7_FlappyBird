@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-//import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -248,7 +247,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupItem(){
         // アイテムの画像を読み込む
-        let itemTexture = SKTexture(imageNamed: "bird_a")   // 仮イメージとしてbird_aをセット
+        let itemTexture = SKTexture(imageNamed: "item")
         itemTexture.filteringMode = .linear
         
         let moving = CGFloat(self.frame.size.height)
@@ -259,22 +258,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let repeatItem = SKAction.sequence([moveItem, resetItem])
         
-        let random_y_range = frame.size.height / 4
+        let random_y_range = frame.size.height / 3
         
         let itemAnimation = SKAction.run ({
             let item = SKNode()
             let random_y = CGFloat.random(in:0..<random_y_range)
             
             let items = SKSpriteNode(texture: itemTexture)
-            items.position = CGPoint(x: self.frame.size.width, y: self.frame.size.height / 2 + random_y)
-            items.xScale = 0.7
-            items.yScale = 0.7
+            items.position = CGPoint(x: self.frame.size.width, y: self.frame.size.height / 3 + random_y)
             items.zPosition = -75    // 壁より奥
         
             items.physicsBody = SKPhysicsBody(rectangleOf: itemTexture.size())
             items.physicsBody?.affectedByGravity = false
             items.physicsBody?.isDynamic = false
-            items.physicsBody?.categoryBitMask = self.itemCategory // itemのカテゴリ番号
+            items.physicsBody?.categoryBitMask = self.itemCategory
             
             item.addChild(items)
             
@@ -351,7 +348,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("ScoreUP")
             score += 1
             scoreLabelNode.text = "Score:\(score)"
-            
+            print(scrollNode.speed)
+            scrollNode.speed += 0.05
             // ベストスコア更新か確認する
             var bestScore = userDefaults.integer(forKey: "BEST")
             if score > bestScore {
@@ -362,11 +360,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         } else if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory || (contact.bodyB.categoryBitMask & itemCategory) == itemCategory {
             // アイテムと衝突した
-            print("GetItem")
+            print("GetCoin")
             run(getSound)
             itemscore += 1
-            itemscoreLabelNode.text = "Item:\(itemscore)"
+            itemscoreLabelNode.text = "Coin:\(itemscore)"
             itemNode.removeAllChildren()
+            if scrollNode.speed >= 1.3 && itemscore > itemscore - 1 {
+                print("speedDown")
+                scrollNode.speed -= 0.3
+            }
         } else {
             // 壁か地面と衝突した
             print("GameOver")
@@ -389,14 +391,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         score = 0
         itemscore = 0
         scoreLabelNode.text = "Score:\(score)"
-        scoreLabelNode.text = "Item:\(itemscore)"
+        itemscoreLabelNode.text = "Coin:\(itemscore)"
         
         bird.position = CGPoint(x: self.frame.size.width * 0.2, y:self.frame.size.height * 0.7)
         bird.physicsBody?.velocity = CGVector.zero
         bird.physicsBody?.collisionBitMask = groundCategory | wallCategory
+
         bird.zRotation = 0
         
         wallNode.removeAllChildren()
+        
+        itemNode.removeAllChildren()
         
         bird.speed = 1
         scrollNode.speed = 1
@@ -428,7 +433,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         itemscoreLabelNode.position = CGPoint(x: 10, y: self.frame.size.height - 120)
         itemscoreLabelNode.zPosition = 100
         itemscoreLabelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        itemscoreLabelNode.text = "Item:\(itemscore)"
+        itemscoreLabelNode.text = "Coin:\(itemscore)"
         self.addChild(itemscoreLabelNode)
     }
 }
